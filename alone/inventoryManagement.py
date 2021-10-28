@@ -1,10 +1,11 @@
 inventory = []
+maxInventory = 1
 
 
 # Sebastian, Adds item to your inventory if you have room
 def addItem(item):
     global inventory
-    if len(inventory) <= 10:
+    if len(inventory) <= maxInventory:
         inventory.append(item)
     else:
         print("Your inventory full")

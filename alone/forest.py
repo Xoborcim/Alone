@@ -1,13 +1,21 @@
 import inventoryManagement
 
-
+# Sebastian
 start = False
+
+# Global variables
+choicePath = ""
+
+# Booleans for each room to see where the player is
 inRoomBeginning = True
 inRoomDarkSouth = False
 inRoomDarkNorth = False
 
+# ForestDarkSouth Variables
 oStonePickedUp = False
-choicePath = ""
+
+# ForestDarkNorth Variables
+bagPickedUp = False
 
 
 def forestDarkSouth():
@@ -34,13 +42,37 @@ def forestDarkSouth():
             print("You picked up the 'Ominous Stone'.")
             oStonePickedUp = True
         else:
-            print("Not an option South")
+            print("Not an option")
             forestDarkSouth()
-        print(choicePath)
 
 
 def forestDarkNorth():
-    print("You follow the northern path \n ")
+    global bagPickedUp
+    global inRoomDarkNorth
+    global choicePath
+    global inRoomBeginning
+
+    while inRoomDarkNorth:
+        print("You follow the northern path")
+        if not bagPickedUp:
+            print("There is an empty bag on the ground")
+        print("Possible paths: North, South")
+        choicePath = input()
+        if choicePath.lower() == "north":
+            print("You walked north")
+        elif choicePath.lower() == "south":
+            inRoomDarkNorth = False
+            inRoomBeginning = True
+            forestBeginning()
+        elif choicePath.lower() == "inventory":
+            inventoryManagement.showInventory()
+        elif choicePath.lower() == "pickup" and not bagPickedUp:
+            inventoryManagement.maxInventory = 10
+            print("You picked up the bag, max inventory size increased.")
+            bagPickedUp = True
+        else:
+            print("Not an option")
+            forestDarkNorth()
 
 
 # Sebastian
@@ -72,4 +104,4 @@ def forestBeginning():
         elif choicePath.lower() == "inventory":
             inventoryManagement.showInventory()
         else:
-            print("Not an option Beginning")
+            print("Not an option")
