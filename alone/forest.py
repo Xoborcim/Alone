@@ -1,4 +1,5 @@
 import inventoryManagement
+import resourceManagement
 
 # Sebastian
 start = False
@@ -24,7 +25,7 @@ def forestDarkSouth():
     global choicePath
     global inRoomBeginning
     choicePath = ""
-
+    resourceManagement.step()
     while inRoomDarkSouth:
         print("You walked down the southern path. \n You are now in an especially dark section of the forest.")
         if not oStonePickedUp:
@@ -51,6 +52,8 @@ def forestDarkNorth():
     global inRoomDarkNorth
     global choicePath
     global inRoomBeginning
+
+    resourceManagement.step()
 
     while inRoomDarkNorth:
         print("You follow the northern path")
@@ -83,6 +86,7 @@ def forestBeginning():
     global inRoomDarkSouth
     global choicePath
     choicePath = ""
+    resourceManagement.step()
     while inRoomBeginning:
         if not start:
             print(
