@@ -1,7 +1,7 @@
 inventory = []
 maxInventory = 1
 playerAttack = 1
-playerDefense = 1
+playerDefense = 0
 playerHealth = 10
 playerEvasiveness = 2
 

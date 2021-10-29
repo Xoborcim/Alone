@@ -38,24 +38,35 @@ def timeTracker():
             hunger -= 1
             hungerDrain += 5
         if day >= 14:
-            gameOver("Your life was drained by the Earth")
+            gameOver("Your life was drained by the Earth. You feel your body lose energy. You can't di...")
         if hunger <= 0:
             gameOver("You starved to death")
 
 
+# Sebastian if you consume food it refills your hunger
 def consumeFood(food):
     global hungerDrain
     global hunger
     global hungerSteps
 
     if food == "Apple":
-        inventoryManagement.removeItem(food)
-        hungerDrain = 5
-        hunger = 3
+        if hunger < 3:
+            inventoryManagement.removeItem(food)
+            hungerDrain = 5
+            hunger = 3
+        else:
+            inventoryManagement.removeItem(food)
+            inventoryManagement.playerHealth = 10
     else:
         print("You can't eat that")
 
 
+# Sebastian Checks the player's health
+def healthCheck():
+    if inventoryManagement.playerHealth <= 0:
+        gameOver("You feel your body lose energy. You can't di...")
+
+# Sebastian If the player dies it will print a custom game over text
 def gameOver(message):
     print(message)
     exit()
