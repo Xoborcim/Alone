@@ -14,9 +14,6 @@ def step():
     global steps
     steps += 1
     hungerSteps += 1
-    print(steps)
-    print(day)
-    print(hunger)
     timeTracker()
 
 
@@ -54,9 +51,11 @@ def consumeFood(food):
             inventoryManagement.removeItem(food)
             hungerDrain = 5
             hunger = 3
+            print("You ate an apple your hunger was restored.")
         else:
             inventoryManagement.removeItem(food)
             inventoryManagement.playerHealth = 10
+            print("Your health is full so you healed your health back.")
     else:
         print("You can't eat that")
 

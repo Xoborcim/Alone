@@ -1,3 +1,4 @@
+import enemies
 import inventoryManagement
 import resourceManagement
 
@@ -5,6 +6,8 @@ start = False
 
 # Global variables
 choicePath = ""
+
+encounteredEnemy = False
 
 # Booleans for each room to see where the player is
 inRoomBeginning = True
@@ -33,15 +36,22 @@ def forestDarkSouth():
     global inRoomDarkSouth
     global choicePath
     global inRoomBeginning
+    global encounteredEnemy
+
     choicePath = ""
-    resourceManagement.step() # Adds one step to the time manager
-    while inRoomDarkSouth: # While in room
-        print("You walked down the southern path. \n You are now in an especially dark section of the forest.") # Gives you your choices
+    resourceManagement.step()  # Adds one step to the time manager
+    if not encounteredEnemy:
+        enemies.startEncounter("Slime")
+        encounteredEnemy = True
+    while inRoomDarkSouth:  # While in room
+        print(
+            "You walked down the southern path.\n You are now in an especially dark section of the forest.")  # Gives you your choices
         if not oStonePickedUp:
             print("There is an ominous stone on the ground.")
         print("Possible paths: North")
         choicePath = input()
         if choicePath.lower() == "north":
+            encounteredEnemy = False
             inRoomDarkSouth = False
             inRoomBeginning = True
             forestBeginning()
@@ -65,20 +75,23 @@ def forestDarkNorth():
     global choicePath
     global inRoomBeginning
     global inRoomCrossRoads
+    global encounteredEnemy
 
     resourceManagement.step()
 
     while inRoomDarkNorth:
-        print("You follow the northern path")
+        print("You enter another section of the forest")
         if not bagPickedUp:
             print("There is an empty bag on the ground")
         print("Possible paths: North, South")
         choicePath = input()
         if choicePath.lower() == "north":
+            encounteredEnemy = False
             inRoomDarkNorth = False
             inRoomCrossRoads = True
             forestCrossRoads()
         elif choicePath.lower() == "south":
+            encounteredEnemy = False
             inRoomDarkNorth = False
             inRoomBeginning = True
             forestBeginning()
@@ -102,12 +115,14 @@ def forestBeginning():
     global inRoomDarkNorth
     global inRoomDarkSouth
     global choicePath
+    global encounteredEnemy
+
     choicePath = ""
     resourceManagement.step()
     while inRoomBeginning:
         if not start:
             print(
-                "You awake from your deep slumber.\n You are in a forest so dense you cannot see the sky. \n Possible "
+                "You awake from your deep slumber.\nYou are in a forest so dense you cannot see the sky.\n Possible "
                 "paths: North, South")
             start = True
         else:
@@ -115,10 +130,12 @@ def forestBeginning():
 
         choicePath = input()
         if choicePath.lower() == "north":
+            encounteredEnemy = False
             inRoomBeginning = False
             inRoomDarkNorth = True
             forestDarkNorth()
         elif choicePath.lower() == "south":
+            encounteredEnemy = False
             inRoomDarkNorth = False
             inRoomDarkSouth = True
             forestDarkSouth()
@@ -137,20 +154,32 @@ def forestCrossRoads():
     global choicePath
     global inRoomBeginning
     global inRoomCrossRoads
+    global inRoomDarkWest
+    global inRoomDarkEast
+    global encounteredEnemy
 
     resourceManagement.step()
-
+    if not encounteredEnemy:
+        enemies.startEncounter("Goblin")
+        encounteredEnemy = True
     while inRoomCrossRoads:
-        print("You follow the northern path")
+        print("You enter a section of the forest that is a crossroad")
         if not applePickedUp:
             print("There is an apple on the ground")
         print("Possible paths:West,East,South")
         choicePath = input()
         if choicePath.lower() == "west":
-            print("You walked west")
+            encounteredEnemy = False
+            inRoomCrossRoads = False
+            inRoomDarkWest = True
+            forestDarkWest()
         if choicePath.lower() == "east":
-            print("You walked east")
+            encounteredEnemy = False
+            inRoomCrossRoads = False
+            inRoomDarkEast = True
+            forestDarkEast()
         elif choicePath.lower() == "south":
+            encounteredEnemy = False
             inRoomCrossRoads = False
             inRoomDarkNorth = True
             forestDarkNorth()
@@ -172,34 +201,36 @@ def forestDarkWest():
     global inRoomDarkWest
     global choicePath
     global inRoomBeginning
+    global inRoomCrossRoads
+    global encounteredEnemy
 
     resourceManagement.step()
-
+    if not encounteredEnemy:
+        enemies.startEncounter("Slime")
+        encounteredEnemy = True
     while inRoomDarkWest:
         print("You follow the western path")
         if not stickPickedUp:
-            print("There is a whole in the ground, a stick is in the whole.")
-        print("Possible paths:South")
+            print("There is a hole in the ground, a stick is in the hole.")
+        print("Possible paths:East")
         choicePath = input()
-        if choicePath.lower() == "west":
-            print("You walked west")
         if choicePath.lower() == "east":
-            print("You walked east")
-        elif choicePath.lower() == "south":
+            encounteredEnemy = False
             inRoomDarkWest = False
-            inRoomBeginning = True
-            forestBeginning()
+            inRoomCrossRoads = True
+            forestCrossRoads()
         elif choicePath.lower() == "inventory":
             inventoryManagement.showInventory()
         elif choicePath.lower() == "pickup" and not stickPickedUp:
             inventoryManagement.maxInventory = 10
-            print("You picked up the stick, max inventory size increased.")
+            print("You picked up the stick.")
+            inventoryManagement.weaponAdd("Stick", 2)
             stickPickedUp = True
         elif choicePath.lower() == "eat":
             resourceManagement.consumeFood("Apple")
         else:
             print("Not an option")
-            forestCrossRoads()
+            forestDarkWest()
 
 
 def forestDarkEast():
@@ -207,9 +238,12 @@ def forestDarkEast():
     global inRoomDarkEast
     global choicePath
     global inRoomCrossRoads
+    global encounteredEnemy
 
     resourceManagement.step()
-
+    if not encounteredEnemy:
+        enemies.startEncounter("Goblin")
+        encounteredEnemy = True
     while inRoomDarkEast:
         print("You follow the eastern path")
         if not sheetPickedUp:
@@ -217,8 +251,10 @@ def forestDarkEast():
         print("Possible paths:North, South")
         choicePath = input()
         if choicePath.lower() == "west":
+            encounteredEnemy = False
             print("You walked west")
         elif choicePath.lower() == "south":
+            encounteredEnemy = False
             inRoomDarkEast = False
             inRoomCrossRoads = True
             forestCrossRoads()
@@ -226,7 +262,7 @@ def forestDarkEast():
             inventoryManagement.showInventory()
         elif choicePath.lower() == "pickup" and not sheetPickedUp:
             inventoryManagement.maxInventory = 10
-            print("You picked up the sheet, max inventory size increased.")
+            print("You picked up the sheet.")
             sheetPickedUp = True
         elif choicePath.lower() == "eat":
             resourceManagement.consumeFood("Apple")

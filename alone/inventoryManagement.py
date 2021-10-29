@@ -26,6 +26,7 @@ def removeItem(item):
 
 # Sebastian, Prints your inventory
 def showInventory():
+    stats()
     print("Inventory:\n", inventory)
 
 
@@ -65,3 +66,7 @@ def armorRemove(name, defense, evasiveness):
     print("You lost", defense, "attack")
     if evasiveness != 0:
         print("You gained", evasiveness, "evasiveness.")
+
+
+def stats():
+    print("Attack:", playerAttack, "\nDefense:", playerDefense, "\nHealth", playerHealth, "\nEvasiveness", playerEvasiveness)
