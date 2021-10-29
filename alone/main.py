@@ -1,6 +1,6 @@
 import forest
-import threading
+import enemies
 
 import resourceManagement
-
+# enemies.startEncounter("Goblin")
 forest.forestBeginning()

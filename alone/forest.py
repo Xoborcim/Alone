@@ -11,12 +11,16 @@ choicePath = ""
 inRoomBeginning = True
 inRoomDarkSouth = False
 inRoomDarkNorth = False
-
+inRoomCrossRoads = False
+inRoomDarkWest = False
 # ForestDarkSouth Variables
 oStonePickedUp = False
 
 # ForestDarkNorth Variables
 bagPickedUp = False
+
+applePickedUp = False
+stickPickedUp = False
 
 
 def forestDarkSouth():
@@ -52,6 +56,7 @@ def forestDarkNorth():
     global inRoomDarkNorth
     global choicePath
     global inRoomBeginning
+    global inRoomCrossRoads
 
     resourceManagement.step()
 
@@ -62,7 +67,9 @@ def forestDarkNorth():
         print("Possible paths: North, South")
         choicePath = input()
         if choicePath.lower() == "north":
-            print("You walked north")
+            inRoomDarkNorth = False
+            inRoomCrossRoads = True
+            forestCrossRoads()
         elif choicePath.lower() == "south":
             inRoomDarkNorth = False
             inRoomBeginning = True
@@ -109,3 +116,73 @@ def forestBeginning():
             inventoryManagement.showInventory()
         else:
             print("Not an option")
+
+
+# Sarim
+def forestCrossRoads():
+    global applePickedUp
+    global inRoomDarkNorth
+    global choicePath
+    global inRoomBeginning
+    global inRoomCrossRoads
+
+    resourceManagement.step()
+
+    while inRoomCrossRoads:
+        print("You follow the northern path")
+        if not applePickedUp:
+            print("There is an apple on the ground")
+        print("Possible paths:West,East,South")
+        choicePath = input()
+        if choicePath.lower() == "west":
+            print("You walked west")
+        if choicePath.lower() == "east":
+            print("You walked east")
+        elif choicePath.lower() == "south":
+            inRoomCrossRoads = False
+            inRoomDarkNorth = True
+            forestDarkNorth()
+        elif choicePath.lower() == "inventory":
+            inventoryManagement.showInventory()
+        elif choicePath.lower() == "pickup" and not applePickedUp:
+            print("You picked up the apple.")
+            applePickedUp = True
+            inventoryManagement.addItem("Apple")
+        else:
+            print("Not an option")
+            forestCrossRoads()
+
+
+"""
+def forestDarkWest():
+    global StickPickedUp
+    global inRoomDarkWest
+    global choicePath
+    global inRoomBeginning
+
+    resourceManagement.step()
+
+    while inRoomDarkWest:
+        print("You follow the northern path")
+        if not applePickedUp:
+            print("There is an empty bag on the ground")
+        print("Possible paths:West,East,South")
+        choicePath = input()
+        if choicePath.lower() == "west":
+            print("You walked west")
+        if choicePath.lower() == "east":
+            print("You walked east")
+        elif choicePath.lower() == "south":
+            inRoomDarkNorth = False
+            inRoomBeginning = True
+            forestBeginning()
+        elif choicePath.lower() == "inventory":
+            inventoryManagement.showInventory()
+        elif choicePath.lower() == "pickup" and not applePickedUp:
+            inventoryManagement.maxInventory = 10
+            print("You picked up the apple, max inventory size increased.")
+            ApplePickedUp = True
+        else:
+            print("Not an option")
+            forestDarkNorth()
+"""

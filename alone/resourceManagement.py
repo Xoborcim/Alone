@@ -47,9 +47,13 @@ def consumeFood(food):
     global hungerDrain
     global hunger
     global hungerSteps
-    inventoryManagement.removeItem(food)
-    hungerDrain = 5
-    hunger = 3
+
+    if food == "Apple":
+        inventoryManagement.removeItem(food)
+        hungerDrain = 5
+        hunger = 3
+    else:
+        print("You can't eat that")
 
 
 def gameOver(message):
