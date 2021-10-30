@@ -18,7 +18,7 @@ def startEncounter(enemy):
     getStats(enemy)
     print("You encountered a", enemy)
     while health != 0:
-        print("Options: Fight, Check, Run Away")
+        print("Options: Fight, Eat, Check, Run Away")
         choice = input()
         if choice.lower() == "fight":
             hit = random.randint(1, evasiveness)
@@ -36,7 +36,7 @@ def startEncounter(enemy):
                 print("You couldn't run away")
         elif choice.lower() == "check":
             print("Health:", health, "\nAttack:", attack, "\nEvasiveness:", evasiveness, "\nPerception:", perception)
-        elif choice.lower() == "consume":
+        elif choice.lower() == "eat":
             resourceManagement.consumeFood("Apple")
         else:
             "Not an option"
