@@ -2,7 +2,7 @@
 import inventoryManagement
 steps = 0
 day = 0
-hunger = 3
+hunger = 5
 hungerSteps = 0
 hungerDrain = 5
 timeSteps = 12
@@ -12,9 +12,11 @@ playerDead = False
 def step():
     global hungerSteps
     global steps
+    global hunger
     steps += 1
     hungerSteps += 1
     timeTracker()
+    print(hunger)
 
 
 def timeTracker():
@@ -47,15 +49,16 @@ def consumeFood(food):
     global hungerSteps
 
     if food == "Apple":
-        if hunger < 3:
-            inventoryManagement.removeItem(food)
-            hungerDrain = 5
-            hunger = 3
-            print("You ate an apple your hunger was restored.")
-        else:
-            inventoryManagement.removeItem(food)
-            inventoryManagement.playerHealth = 10
-            print("Your health is full so you healed your health back.")
+        if "Apple" in inventoryManagement.inventory:
+            if hunger < 3:
+                inventoryManagement.removeItem(food)
+                hungerDrain = 5
+                hunger = 3
+                print("You ate an apple your hunger was restored.")
+            else:
+                inventoryManagement.removeItem(food)
+                inventoryManagement.playerHealth = 10
+                print("Your health is full so you healed your health back.")
     else:
         print("You can't eat that")
 
@@ -64,6 +67,7 @@ def consumeFood(food):
 def healthCheck():
     if inventoryManagement.playerHealth <= 0:
         gameOver("You feel your body lose energy. You can't di...")
+
 
 # Sebastian If the player dies it will print a custom game over text
 def gameOver(message):

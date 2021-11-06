@@ -1,8 +1,11 @@
 import enemies
 import inventoryManagement
 import resourceManagement
+import cave
 
 start = False
+
+inForest = True
 
 # Global variables
 choicePath = ""
@@ -239,6 +242,7 @@ def forestDarkEast():
     global choicePath
     global inRoomCrossRoads
     global encounteredEnemy
+    global inForest
 
     resourceManagement.step()
     if not encounteredEnemy:
@@ -250,10 +254,13 @@ def forestDarkEast():
             print("You see a pair of eyes in the shadows.Once you blink the eyes are gone.You go to investigate and find a metal sheet the size of a coin.")
         print("Possible paths:North, South")
         choicePath = input()
-        if choicePath.lower() == "west":
+        if choicePath.lower() == "north":
             encounteredEnemy = False
-            print("You walked west")
-        elif choicePath.lower() == "south":
+            print("You walked North")
+            inForest = False
+            inRoomDarkEast = False
+            cave.inCave = True
+        elif choicePath.lower() == "South":
             encounteredEnemy = False
             inRoomDarkEast = False
             inRoomCrossRoads = True
@@ -261,11 +268,12 @@ def forestDarkEast():
         elif choicePath.lower() == "inventory":
             inventoryManagement.showInventory()
         elif choicePath.lower() == "pickup" and not sheetPickedUp:
-            inventoryManagement.maxInventory = 10
-            print("You picked up the sheet.")
             sheetPickedUp = True
+            if sheetPickedUp and oStonePickedUp:
+                print("You picked up the sheet. You have a feeling that something changed somewhere.")
         elif choicePath.lower() == "eat":
             resourceManagement.consumeFood("Apple")
         else:
             print("Not an option")
             forestDarkEast()
+

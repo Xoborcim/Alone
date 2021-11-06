@@ -8,17 +8,20 @@ attack = 0
 evasiveness = 0
 perception = 0
 
+enemiesKilled = 0
+
 
 def startEncounter(enemy):
     global health
     global attack
     global evasiveness
     global perception
+    global enemiesKilled
 
     getStats(enemy)
     print("You encountered a", enemy)
     while health != 0:
-        print("Options: Fight, Eat, Check, Run Away")
+        print("Options: Fight, Eat, Check, Run")
         choice = input()
         if choice.lower() == "fight":
             hit = random.randint(1, evasiveness)
@@ -27,7 +30,7 @@ def startEncounter(enemy):
                 print("Your attack hit for", inventoryManagement.playerAttack)
             else:
                 print("Your attack missed")
-        elif choice.lower() == "run away":
+        elif choice.lower() == "run":
             ranaway = random.randint(1, perception)
             if ranaway == 1:
                 print("You ran away")
@@ -53,6 +56,7 @@ def startEncounter(enemy):
     if health == 0:
         print("You won! You got an apple!")
         inventoryManagement.addItem("Apple")
+        enemiesKilled += 1
 
 
 def getStats(enemy):
