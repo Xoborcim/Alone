@@ -43,7 +43,7 @@ def startEncounter(enemy):
             resourceManagement.consumeFood("Apple")
         else:
             "Not an option"
-        print("The,", enemy, "Attacks")
+        print("The", enemy, "Attacks")
         enemyHit = random.randint(1, inventoryManagement.playerEvasiveness)
         if enemyHit == 1:
             enemyDamage = attack - inventoryManagement.playerDefense
