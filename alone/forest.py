@@ -46,7 +46,8 @@ def forestDarkSouth():
         enemies.startEncounter("Slime")
         encounteredEnemy = True
     while inRoomDarkSouth:  # While in room
-        print("You walked down the southern path.\nYou are now in an especially dark section of the forest.")  # Gives you your choices
+        print("You walked down the southern path.\nYou are now in an especially dark section of the forest.")
+        # Gives you your choices
         if not oStonePickedUp:
             print("There is an Ominous Stone on the ground.")
         if swordObtained and not armorObtained:
@@ -266,7 +267,7 @@ def forestDarkEast():
         if not sheetPickedUp:
             print("You see a pair of eyes in the shadows. Once you blink the eyes are gone.\nYou go to investigate "
                   "and find a metal sheet the size of a coin.")
-        print("Possible paths:North, South")
+        print("Possible paths:North, West")
         choicePath = input()
         if choicePath.lower() == "north":
             encounteredEnemy = False

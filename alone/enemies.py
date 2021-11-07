@@ -79,7 +79,7 @@ def getStats(enemy):
         perception = 2
     elif enemy == "Troll":
         # Troll
-        health = 5
+        health = 4
         attack = 3
         evasiveness = 1
         perception = 1

@@ -78,3 +78,4 @@ def instructions():
     print("You can move by typing in a possible path which is presented to you in each room.")
     print("You can type 'inventory' to view your inventory and your stats.")
     print("You can type 'eat' to eat food to refill your hunger or heal you.")
+    print("If there is an item on the ground you can pick it up using 'pickup'")
