@@ -2,6 +2,7 @@ import enemies
 import inventoryManagement
 import resourceManagement
 import cave
+import town
 
 start = False
 
@@ -19,18 +20,15 @@ inRoomDarkNorth = False
 inRoomCrossRoads = False
 inRoomDarkWest = False
 inRoomDarkEast = False
-# ForestDarkSouth Variables
+
+# Item booleans
 oStonePickedUp = False
-
-# ForestDarkNorth Variables
 bagPickedUp = False
-
 applePickedUp = False
 stickPickedUp = False
-
-# ForestDarkEast Variables
-
 sheetPickedUp = False
+swordObtained = False
+armorObtained = False
 
 
 # Sebastian forestDarkSouth room
@@ -40,6 +38,7 @@ def forestDarkSouth():
     global choicePath
     global inRoomBeginning
     global encounteredEnemy
+    global armorObtained
 
     choicePath = ""
     resourceManagement.step()  # Adds one step to the time manager
@@ -47,11 +46,14 @@ def forestDarkSouth():
         enemies.startEncounter("Slime")
         encounteredEnemy = True
     while inRoomDarkSouth:  # While in room
-        print(
-            "You walked down the southern path.\n You are now in an especially dark section of the forest.")  # Gives you your choices
+        print("You walked down the southern path.\nYou are now in an especially dark section of the forest.")  # Gives you your choices
         if not oStonePickedUp:
-            print("There is an ominous stone on the ground.")
-        print("Possible paths: North")
+            print("There is an Ominous Stone on the ground.")
+        if swordObtained and not armorObtained:
+            print("You find a piece of Armor Covered in Thorns")
+            armorObtained = True
+            inventoryManagement.armorAdd("Leeching Thorn Armor", 10, 5)
+        print("Possible Paths: North")
         choicePath = input()
         if choicePath.lower() == "north":
             encounteredEnemy = False
@@ -124,12 +126,13 @@ def forestBeginning():
     resourceManagement.step()
     while inRoomBeginning:
         if not start:
+            resourceManagement.instructions()
             print(
-                "You awake from your deep slumber.\nYou are in a forest so dense you cannot see the sky.\n Possible "
+                "You awake from your deep slumber.\nYou are in a forest so dense you cannot see the sky.\nPossible "
                 "paths: North, South")
             start = True
         else:
-            print("You are in a very dense forest. \n Possible paths: North, South")
+            print("You are in a very dense forest.\n Possible paths: North, South")
 
         choicePath = input()
         if choicePath.lower() == "north":
@@ -160,6 +163,7 @@ def forestCrossRoads():
     global inRoomDarkWest
     global inRoomDarkEast
     global encounteredEnemy
+    global inForest
 
     resourceManagement.step()
     if not encounteredEnemy:
@@ -169,7 +173,7 @@ def forestCrossRoads():
         print("You enter a section of the forest that is a crossroad")
         if not applePickedUp:
             print("There is an apple on the ground")
-        print("Possible paths:West,East,South")
+        print("Possible paths:West, East, South, North")
         choicePath = input()
         if choicePath.lower() == "west":
             encounteredEnemy = False
@@ -186,6 +190,14 @@ def forestCrossRoads():
             inRoomCrossRoads = False
             inRoomDarkNorth = True
             forestDarkNorth()
+        elif choicePath.lower() == "north":
+            encounteredEnemy = False
+            print("You walked North")
+            inForest = False
+            inRoomCrossRoads = False
+            town.inTown = True
+            town.inTownCentre = True
+            town.townCentre()
         elif choicePath.lower() == "inventory":
             inventoryManagement.showInventory()
         elif choicePath.lower() == "pickup" and not applePickedUp:
@@ -243,6 +255,7 @@ def forestDarkEast():
     global inRoomCrossRoads
     global encounteredEnemy
     global inForest
+    global swordObtained
 
     resourceManagement.step()
     if not encounteredEnemy:
@@ -251,7 +264,8 @@ def forestDarkEast():
     while inRoomDarkEast:
         print("You follow the eastern path")
         if not sheetPickedUp:
-            print("You see a pair of eyes in the shadows.Once you blink the eyes are gone.You go to investigate and find a metal sheet the size of a coin.")
+            print("You see a pair of eyes in the shadows. Once you blink the eyes are gone.\nYou go to investigate "
+                  "and find a metal sheet the size of a coin.")
         print("Possible paths:North, South")
         choicePath = input()
         if choicePath.lower() == "north":
@@ -260,7 +274,9 @@ def forestDarkEast():
             inForest = False
             inRoomDarkEast = False
             cave.inCave = True
-        elif choicePath.lower() == "South":
+            cave.inRoomCaveEntrance = True
+            cave.caveEntrance()
+        elif choicePath.lower() == "west":
             encounteredEnemy = False
             inRoomDarkEast = False
             inRoomCrossRoads = True
@@ -269,8 +285,14 @@ def forestDarkEast():
             inventoryManagement.showInventory()
         elif choicePath.lower() == "pickup" and not sheetPickedUp:
             sheetPickedUp = True
+            inventoryManagement.addItem("Metal Sheet")
             if sheetPickedUp and oStonePickedUp:
-                print("You picked up the sheet. You have a feeling that something changed somewhere.")
+                print("You picked up the sheet. The 'Ominous Stone' and the 'Metal Sheet' combine into the 'Sword of "
+                      "the Wanderer'\nThe sword is pointing the where the stone was found.")
+                inventoryManagement.removeItem("Metal Sheet")
+                inventoryManagement.removeItem("Ominous Stone")
+                inventoryManagement.weaponAdd("Sword of the Wanderer", 10)
+                swordObtained = True
         elif choicePath.lower() == "eat":
             resourceManagement.consumeFood("Apple")
         else:

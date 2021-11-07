@@ -16,7 +16,6 @@ def step():
     steps += 1
     hungerSteps += 1
     timeTracker()
-    print(hunger)
 
 
 def timeTracker():
@@ -36,7 +35,7 @@ def timeTracker():
         if hungerSteps >= hungerDrain:
             hunger -= 1
             hungerDrain += 5
-        if day >= 14:
+        if day >= 7:
             gameOver("Your life was drained by the Earth. You feel your body lose energy. You can't di...")
         if hunger <= 0:
             gameOver("You starved to death")
@@ -73,3 +72,9 @@ def healthCheck():
 def gameOver(message):
     print(message)
     exit()
+
+
+def instructions():
+    print("You can move by typing in a possible path which is presented to you in each room.")
+    print("You can type 'inventory' to view your inventory and your stats.")
+    print("You can type 'eat' to eat food to refill your hunger or heal you.")

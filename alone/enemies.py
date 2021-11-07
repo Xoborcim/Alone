@@ -83,3 +83,13 @@ def getStats(enemy):
         attack = 3
         evasiveness = 1
         perception = 1
+    elif enemy == "Sprite":
+        health = 1
+        attack = 2
+        evasiveness = 5
+        perception = 5
+    elif enemy == "Yorbkx":
+        health = 100
+        attack = 10
+        evasiveness = 3
+        perception = 100
