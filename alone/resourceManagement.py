@@ -21,18 +21,18 @@ def step():
 def timeTracker():
     global timeSteps
     global hungerSteps
+    global steps
+    global day
+    global hunger
+    global hungerDrain
+    global hungerSteps
 
     if not playerDead:
-        global steps
-        global day
-        global hunger
-        global hungerDrain
-        global hungerSteps
-
         if steps >= timeSteps:
             day += 1
             timeSteps += 12
         if hungerSteps >= hungerDrain:
+            print("Lost hunger")
             hunger -= 1
             hungerDrain += 5
         if day >= 7:
@@ -51,7 +51,7 @@ def consumeFood(food):
         if "Apple" in inventoryManagement.inventory:
             if hunger < 3:
                 inventoryManagement.removeItem(food)
-                hungerDrain = 5
+                hungerDrain += 5
                 hunger = 3
                 print("You ate an apple your hunger was restored.")
             else:

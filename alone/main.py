@@ -1,3 +1,4 @@
 import forest
-
-forest.forestBeginning()
+import enemies
+enemies.startEncounter("Yorbkx")
+#forest.forestBeginning()

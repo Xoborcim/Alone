@@ -53,7 +53,7 @@ def startEncounter(enemy):
         else:
             print("You dodged the", enemy + "'s", "attack.")
         choice = ""
-    if health == 0:
+    if health >= 0:
         print("You won! You got an apple!")
         inventoryManagement.addItem("Apple")
         enemiesKilled += 1
@@ -90,6 +90,6 @@ def getStats(enemy):
         perception = 5
     elif enemy == "Yorbkx":
         health = 100
-        attack = 10
-        evasiveness = 3
-        perception = 100
+        attack = 30
+        evasiveness = 5
+        perception = 9999999
