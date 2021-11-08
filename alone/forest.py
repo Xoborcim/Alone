@@ -46,14 +46,17 @@ def forestDarkSouth():
         enemies.startEncounter("Slime")
         encounteredEnemy = True
     while inRoomDarkSouth:  # While in room
-        print("You walked down the southern path.\nYou are now in an especially dark section of the forest.")
+        print("You walked down the southern path.\nYou are now in an especially dark section of a mysterious forest. "
+              "\nYou can barely see the sun from above the trees but it looks... faded?")
         # Gives you your choices
         if not oStonePickedUp:
             print("There is an Ominous Stone on the ground.")
         if swordObtained and not armorObtained:
-            print("You find a piece of Armor Covered in Thorns")
+            print("You find a piece of Armor that seems magical.")
             armorObtained = True
-            inventoryManagement.armorAdd("Leeching Thorn Armor", 10, 5)
+            inventoryManagement.armorAdd("Lone Wanderer's Armor", 10, 5)
+            print("Underneath the armor you find a crude drawing of a map.\nIt shows a town which is North of "
+                  "the Crossroads")
         print("Possible Paths: North")
         choicePath = input()
         if choicePath.lower() == "north":
@@ -86,9 +89,10 @@ def forestDarkNorth():
     resourceManagement.step()
 
     while inRoomDarkNorth:
-        print("You enter another section of the forest")
+        print("You enter another section of the forest. There are massive rocks and the ground. "
+              "\nStrangely there are no animals running around")
         if not bagPickedUp:
-            print("There is an empty bag on the ground")
+            print("There is an empty bag on the ground between some rocks.")
         print("Possible paths: North, South")
         choicePath = input()
         if choicePath.lower() == "north":
@@ -107,6 +111,7 @@ def forestDarkNorth():
             inventoryManagement.maxInventory = 10
             print("You picked up the bag, max inventory size increased.")
             bagPickedUp = True
+            # player can pickup bag
         elif choicePath.lower() == "eat":
             resourceManagement.consumeFood("Apple")
         else:
@@ -131,6 +136,7 @@ def forestBeginning():
             print(
                 "You awake from your deep slumber.\nYou are in a forest so dense you cannot see the sky.")
             start = True
+            # if player has beaten game before run code below
         if resourceManagement.beatOnce:
             print("You have a strange feeling you have been here before...")
         print("Possible paths: North, South")
@@ -165,13 +171,14 @@ def forestCrossRoads():
     global inRoomDarkEast
     global encounteredEnemy
     global inForest
-
+    print("\033[1;32;40m\n")
     resourceManagement.step()
     if not encounteredEnemy:
         enemies.startEncounter("Goblin")
         encounteredEnemy = True
     while inRoomCrossRoads:
-        print("You enter a section of the forest that is a crossroad")
+        print("You enter a section of the forest that has four paths. "
+              "\nAs you look around you you realize there is no sky at all.")
         if not applePickedUp:
             print("There is an apple on the ground")
         print("Possible paths:North, East, South, West")
@@ -212,6 +219,7 @@ def forestCrossRoads():
             forestCrossRoads()
 
 
+# Sarim
 def forestDarkWest():
     global stickPickedUp
     global inRoomDarkWest
@@ -225,7 +233,7 @@ def forestDarkWest():
         enemies.startEncounter("Slime")
         encounteredEnemy = True
     while inRoomDarkWest:
-        print("You follow the western path")
+        print("You enter another part of the forest. You feel... strange.")
         if not stickPickedUp:
             print("There is a hole in the ground, a stick is in the hole.")
         print("Possible paths:East")
@@ -249,6 +257,7 @@ def forestDarkWest():
             forestDarkWest()
 
 
+# Sarim
 def forestDarkEast():
     global sheetPickedUp
     global inRoomDarkEast
@@ -257,7 +266,7 @@ def forestDarkEast():
     global encounteredEnemy
     global inForest
     global swordObtained
-
+    print("\033[1;32;40m\n")
     resourceManagement.step()
     if not encounteredEnemy:
         enemies.startEncounter("Goblin")
@@ -294,6 +303,7 @@ def forestDarkEast():
                 inventoryManagement.removeItem("Ominous Stone")
                 inventoryManagement.weaponAdd("Sword of the Wanderer", 10)
                 swordObtained = True
+                # if player has obtained 2 specific items those items will create a third item, the first 2 items will disappear from your inventory
         elif choicePath.lower() == "eat":
             resourceManagement.consumeFood("Apple")
         else:

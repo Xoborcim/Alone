@@ -30,6 +30,7 @@ def showInventory():
     print("Inventory:\n", inventory)
 
 
+# Sebastian, Adds a weapon and gives you extra attack
 def weaponAdd(name, attack):
     global playerAttack
     addItem(name)
@@ -37,13 +38,7 @@ def weaponAdd(name, attack):
     print("You gained", attack, "attack")
 
 
-def weaponRemove(name, attack):
-    global playerAttack
-    removeItem(name)
-    playerAttack -= attack
-    print("You lost", attack, "attack")
-
-
+# Sebastian, adds a piece of armor which gives you defense and evasiveness
 def armorAdd(name, defense, evasiveness):
     global playerDefense
     global playerEvasiveness
@@ -56,17 +51,6 @@ def armorAdd(name, defense, evasiveness):
         print("You gained", evasiveness, "evasiveness.")
 
 
-def armorRemove(name, defense, evasiveness):
-    global playerAttack
-    global playerEvasiveness
-
-    removeItem(name)
-    playerAttack -= defense
-    playerEvasiveness -= evasiveness
-    print("You lost", defense, "attack")
-    if evasiveness != 0:
-        print("You gained", evasiveness, "evasiveness.")
-
-
+# Gets the player stats and prints them
 def stats():
     print("Attack:", playerAttack, "\nDefense:", playerDefense, "\nHealth", playerHealth, "\nEvasiveness", playerEvasiveness)

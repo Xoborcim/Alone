@@ -4,7 +4,7 @@ import resourceManagement
 import forest
 
 inCave = False
-
+# Room booleans to find player location
 inRoomCaveEntrance = True
 inRoomCaveEast = False
 inRoomCaveWest = False
@@ -12,6 +12,8 @@ inRoomCaveExit = False
 
 encounteredEnemy = False
 choicePath = ""
+
+keyObtained = False
 
 
 # Sebastian
@@ -22,15 +24,16 @@ def caveEntrance():
     global inCave
     global inRoomCaveEast
     global inRoomCaveWest
-
+    print("\035[1;32;40m\n")
     resourceManagement.step()
     if not encounteredEnemy:
         enemies.startEncounter("Troll")
         encounteredEnemy = True
     while inRoomCaveEntrance:
-        print("You enter a dark cave.")
+        print("You enter a dark cave. There are gems in the wall that have a faint glow.\n Do gems always glow?")
         print("Possible paths:East, West, South")
         choicePath = input()
+        # in this part of the code the player is presented with directions and they can chose where to go
         if choicePath.lower() == "east":
             encounteredEnemy = False
             print("You walked East")
@@ -53,13 +56,17 @@ def caveEntrance():
             forest.forestDarkEast()
         elif choicePath.lower() == "inventory":
             inventoryManagement.showInventory()
+            # player asks to open inventory and the inventory is shown
         elif choicePath.lower() == "eat":
             resourceManagement.consumeFood("Apple")
+            # player can eat an apple
         else:
             print("Not an option")
             caveEntrance()
+            # if player inputs an invalid option the code will print "Not an option"
 
 
+# Sarim
 def caveEast():
     global choicePath
     global inRoomCaveEntrance
@@ -72,7 +79,10 @@ def caveEast():
         enemies.startEncounter("Sprite")
         encounteredEnemy = True
     while inRoomCaveEast:
-        print("You enter a small cavern.")
+        print(
+            "You enter a small section of the cave. There are no gems and the room is very dark\n except for the glow from the room before.")
+        if not keyObtained:
+            print("You spot a small crimson key on the ground")
         print("Possible paths: West")
         choicePath = input()
         if choicePath.lower() == "west":
@@ -84,17 +94,22 @@ def caveEast():
             inventoryManagement.showInventory()
         elif choicePath.lower() == "eat":
             resourceManagement.consumeFood("Apple")
+        elif choicePath.lower() == "pickup" and not keyObtained:
+            inventoryManagement.addItem("Crimson Key")
+            print("You have obtained the 'Crimson Key'")
         else:
             print("Not an option")
             caveEast()
 
 
+# Sarim
 def caveWest():
     global choicePath
     global inRoomCaveWest
     global encounteredEnemy
     global inRoomCaveEntrance
     global inRoomCaveExit
+    global keyObtained
 
     resourceManagement.step()
     if not encounteredEnemy:
@@ -104,6 +119,7 @@ def caveWest():
         print("You enter a Path, you feel a breeze ahead of you and there is a light at the end of this path.\nOn the "
               "walls there is drawings of the Earth Absorbing all Life Energy from its inhabitants")
         print(7 - resourceManagement.day, "Days Left until your Life Energy is gone.")
+        # game shows how many day are left until you die
         print("Possible paths: North, East")
         choicePath = input()
         if choicePath.lower() == "east":
@@ -113,11 +129,14 @@ def caveWest():
             print("You walked West")
             caveEntrance()
         elif choicePath.lower() == "north":
-            encounteredEnemy = False
-            inRoomCaveWest = False
-            inRoomCaveExit = True
-            print("You walked North")
-            caveExit()
+            if keyObtained:
+                encounteredEnemy = False
+                inRoomCaveWest = False
+                inRoomCaveExit = True
+                print("You walked North")
+                caveExit()
+            else:
+                print("You need the key to do go there")
         elif choicePath.lower() == "inventory":
             inventoryManagement.showInventory()
         elif choicePath.lower() == "eat":
@@ -127,43 +146,17 @@ def caveWest():
             caveEast()
 
 
+# Sebastian
+# Exit of the cave
 def caveExit():
     print("You exit the cave into a beautiful meadow. On the massive Tree in front of you you see drawings "
           "\nexplaining that here you are immune from the Earth.")
-    if forest.swordObtained and forest.armorObtained:
-        print("A mysterious being walks out from behind the tree.")
-        if enemies.enemiesKilled == 0:
-            if resourceManagement.beatOnce:
-                print("'You have beat this game before it seems. Well no need to repeat myself now.'")
-            else:
-                print(
-                    "The being speaks in your head. 'You have managed to escape that cursed place without spilling any "
-                    "blood and you have found the sword and the armor. For that I applaud you. I have been here for so "
-                    "long with nothing to do. Why not give me a fight?")
-                input("Fight this being?")
-                print("'You really think that you have a choice?'")
-            enemies.startEncounter("Yorbkx")
-            if resourceManagement.beatOnce:
-                resourceManagement.gameOver("'Are you satisfied now?'")
-            else:
-                resourceManagement.gameOver("'You have beat me, I will be your ally and help you rebuild this broken "
-                                            "world.' You and the being begin planning on how you can stop the Earth")
-        else:
-            if resourceManagement.beatOnce:
-                print(
-                    "'Have you really come back just to kill them again? Well this time I will make sure to stop you for it you monster.'")
-            else:
-                print("'You think you can get away with murder? Well I will make sure you are punished for it'")
-            enemies.startEncounter("Yorbkx")
-            if resourceManagement.beatOnce:
-                resourceManagement.gameOver("You have killed it again. You grin in satisfaction.")
-            else:
-                resourceManagement.gameOver("You have killed the being. You stumble through the forest.\nYou feel the "
-                                            "souls of the monsters you killed try to fight you but you fight it off.")
-    elif enemies.enemiesKilled == 0:
+    # if player killed 0 enemies run code below
+    if enemies.enemiesKilled == 0:
         print("At last you have finally found a place where you can live out in peace.")
         print("As you analyze your surroundings you realize that you are the only one there.")
         resourceManagement.gameOver("You feel your body collapse from exhaustion as you fall asleep...")
+        # if player killed 1 or more enemies run code below
     elif enemies.enemiesKilled != 0:
         print("As you walk into the meadow you feel a sharp pain in your gut.")
         print("All the souls you have taken away from those 'monsters' begin transforming you into something that is "
