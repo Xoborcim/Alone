@@ -129,11 +129,11 @@ def forestBeginning():
         if not start:
             resourceManagement.instructions()
             print(
-                "You awake from your deep slumber.\nYou are in a forest so dense you cannot see the sky.\nPossible "
-                "paths: North, South")
+                "You awake from your deep slumber.\nYou are in a forest so dense you cannot see the sky.")
             start = True
-        else:
-            print("You are in a very dense forest.\n Possible paths: North, South")
+        if resourceManagement.beatOnce:
+            print("You have a strange feeling you have been here before...")
+        print("Possible paths: North, South")
 
         choicePath = input()
         if choicePath.lower() == "north":
@@ -174,7 +174,7 @@ def forestCrossRoads():
         print("You enter a section of the forest that is a crossroad")
         if not applePickedUp:
             print("There is an apple on the ground")
-        print("Possible paths:West, East, South, North")
+        print("Possible paths:North, East, South, West")
         choicePath = input()
         if choicePath.lower() == "west":
             encounteredEnemy = False
@@ -289,7 +289,7 @@ def forestDarkEast():
             inventoryManagement.addItem("Metal Sheet")
             if sheetPickedUp and oStonePickedUp:
                 print("You picked up the sheet. The 'Ominous Stone' and the 'Metal Sheet' combine into the 'Sword of "
-                      "the Wanderer'\nThe sword is pointing the where the stone was found.")
+                      "the Wanderer'\nThe sword is pointing to where the stone was found.")
                 inventoryManagement.removeItem("Metal Sheet")
                 inventoryManagement.removeItem("Ominous Stone")
                 inventoryManagement.weaponAdd("Sword of the Wanderer", 10)

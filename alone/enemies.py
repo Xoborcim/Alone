@@ -16,11 +16,10 @@ def startEncounter(enemy):
     global attack
     global evasiveness
     global perception
-    global enemiesKilled
 
     getStats(enemy)
     print("You encountered a", enemy)
-    while health != 0:
+    while health > 0:
         print("Options: Fight, Eat, Check, Run")
         choice = input()
         if choice.lower() == "fight":
@@ -28,6 +27,10 @@ def startEncounter(enemy):
             if hit == 1:
                 health -= inventoryManagement.playerAttack
                 print("Your attack hit for", inventoryManagement.playerAttack)
+                if health <= 0:
+                    health = 0
+                    enemyDead()
+                    return
             else:
                 print("Your attack missed")
         elif choice.lower() == "run":
@@ -45,7 +48,7 @@ def startEncounter(enemy):
             "Not an option"
         print("The", enemy, "Attacks")
         enemyHit = random.randint(1, inventoryManagement.playerEvasiveness)
-        if enemyHit == 1:
+        if enemyHit == 1 and health > 0:
             enemyDamage = attack - inventoryManagement.playerDefense
             inventoryManagement.playerHealth -= enemyDamage
             print("You took", enemyDamage, "damage.")
@@ -53,10 +56,13 @@ def startEncounter(enemy):
         else:
             print("You dodged the", enemy + "'s", "attack.")
         choice = ""
-    if health >= 0:
-        print("You won! You got an apple!")
-        inventoryManagement.addItem("Apple")
-        enemiesKilled += 1
+
+
+def enemyDead():
+    global enemiesKilled
+    print("You won! You got an apple!")
+    inventoryManagement.addItem("Apple")
+    enemiesKilled += 1
 
 
 def getStats(enemy):
@@ -90,6 +96,6 @@ def getStats(enemy):
         perception = 5
     elif enemy == "Yorbkx":
         health = 100
-        attack = 30
+        attack = 20
         evasiveness = 5
         perception = 9999999

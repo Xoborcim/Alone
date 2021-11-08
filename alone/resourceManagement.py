@@ -7,6 +7,7 @@ hungerSteps = 0
 hungerDrain = 5
 timeSteps = 12
 playerDead = False
+beatOnce = False
 
 
 def step():
@@ -32,7 +33,7 @@ def timeTracker():
             day += 1
             timeSteps += 12
         if hungerSteps >= hungerDrain:
-            print("Lost hunger")
+            print("You feel hungrier")
             hunger -= 1
             hungerDrain += 5
         if day >= 7:
@@ -70,7 +71,14 @@ def healthCheck():
 
 # Sebastian If the player dies it will print a custom game over text
 def gameOver(message):
+    global beatOnce
+    beatOnce = True
     print(message)
+    file = open("playedOnce.txt", "w")
+    file.truncate(0)
+    file.write(str(beatOnce))
+
+    file.close()
     input("Press 'Enter' to close.")
     exit()
 
@@ -80,3 +88,14 @@ def instructions():
     print("You can type 'inventory' to view your inventory and your stats.")
     print("You can type 'eat' to eat food to refill your hunger or heal you.")
     print("If there is an item on the ground you can pick it up using 'pickup'")
+
+
+def load():
+    global beatOnce
+    global day
+
+    file = open("playedOnce.txt", "r")
+    data = file.readlines()
+    beatOnce = data[0]
+    if beatOnce:
+        day = 4

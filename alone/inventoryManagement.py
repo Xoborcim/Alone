@@ -1,5 +1,5 @@
 inventory = []
-maxInventory = 1
+maxInventory = 5
 playerAttack = 1
 playerDefense = 0
 playerHealth = 10
@@ -12,7 +12,7 @@ def addItem(item):
     if len(inventory) <= maxInventory:
         inventory.append(item)
     else:
-        print("Your inventory full")
+        print("Your inventory is full")
 
 
 # Sebastian, Removes item from your inventory if you have that item

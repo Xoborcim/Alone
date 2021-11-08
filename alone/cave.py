@@ -133,19 +133,33 @@ def caveExit():
     if forest.swordObtained and forest.armorObtained:
         print("A mysterious being walks out from behind the tree.")
         if enemies.enemiesKilled == 0:
-            print("The being speaks in your head. 'You have managed to escape that cursed place without spilling any "
-                  "blood and you have found the sword and the armor. For that I applaud you. I have been here for so "
-                  "long with nothing to do. Why not give me a fight?")
-            input("Fight these creature?")
-            print("You really think that you have a choice?")
+            if resourceManagement.beatOnce:
+                print("'You have beat this game before it seems. Well no need to repeat myself now.'")
+            else:
+                print(
+                    "The being speaks in your head. 'You have managed to escape that cursed place without spilling any "
+                    "blood and you have found the sword and the armor. For that I applaud you. I have been here for so "
+                    "long with nothing to do. Why not give me a fight?")
+                input("Fight this being?")
+                print("'You really think that you have a choice?'")
             enemies.startEncounter("Yorbkx")
-            resourceManagement.gameOver("'You have beat me, I will be your ally and help you rebuild this broken "
-                                        "world.' You and the being begin planning on how you can stop the Earth")
+            if resourceManagement.beatOnce:
+                resourceManagement.gameOver("'Are you satisfied now?'")
+            else:
+                resourceManagement.gameOver("'You have beat me, I will be your ally and help you rebuild this broken "
+                                            "world.' You and the being begin planning on how you can stop the Earth")
         else:
-            print("'You think you can get away with murder? Well I will make sure you are punished for it'")
+            if resourceManagement.beatOnce:
+                print(
+                    "'Have you really come back just to kill them again? Well this time I will make sure to stop you for it you monster.'")
+            else:
+                print("'You think you can get away with murder? Well I will make sure you are punished for it'")
             enemies.startEncounter("Yorbkx")
-            resourceManagement.gameOver("You have killed the creature. You stumble through the forest.\nYou feel the "
-                                        "souls of the monsters you killed try to fight you but you fight it off.")
+            if resourceManagement.beatOnce:
+                resourceManagement.gameOver("You have killed it again. You grin in satisfaction.")
+            else:
+                resourceManagement.gameOver("You have killed the being. You stumble through the forest.\nYou feel the "
+                                            "souls of the monsters you killed try to fight you but you fight it off.")
     elif enemies.enemiesKilled == 0:
         print("At last you have finally found a place where you can live out in peace.")
         print("As you analyze your surroundings you realize that you are the only one there.")
