@@ -71,6 +71,7 @@ def healthCheck():
 # Sebastian If the player dies it will print a custom game over text
 def gameOver(message):
     print(message)
+    input("Press 'Enter' to close.")
     exit()
 
 
