@@ -72,16 +72,9 @@ def healthCheck():
         gameOver("You feel your body lose energy. You can't di...")
 
 
-# Sebastian If the player dies it will print a custom game over text
+# Sebastian If the player dies it will print a custom game over text or if the player beats the game
 def gameOver(message):
-    global beatOnce
-    beatOnce = True
     print(message)
-    file = open("playedOnce.txt", "w")
-    file.truncate(0)
-    file.write(str(beatOnce))
-
-    file.close()
     input("Press 'Enter' to close.")
     exit()
 

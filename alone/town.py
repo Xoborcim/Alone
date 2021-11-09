@@ -105,6 +105,8 @@ def house2():
     global inTownCentre
 
     while inHouse2:
+        if forest.swordObtained and forest.armorObtained:
+          secretBoss()
         print("You enter a small house. There is nothing in this house.")
         print("Possible paths: Exit")
         choicePath = input()
@@ -119,45 +121,6 @@ def house2():
         else:
             print("Not an option")
             house2()
-        if forest.swordObtained and forest.armorObtained:
-            # game checks if you have 2 specific items
-            print("A mysterious being walks out from behind the tree.")
-            if enemies.enemiesKilled == 0:
-                if resourceManagement.beatOnce:
-                    # if player has killed 0 enemies and has beaten the game once print message below
-                    print("'You have beat this game before it seems. Well no need to repeat myself now.'")
-                else:
-                    # if player has not beaten game once run code below
-                    print(
-                        "The being speaks in your head. 'You have managed to escape that cursed place without spilling any "
-                        "blood and you have found the sword and the armor. For that I applaud you. I have been here for so "
-                        "long with nothing to do. Why not give me a fight?")
-                    input("Fight this being?")
-                    print("'You really think that you have a choice?'")
-                enemies.startEncounter("Yorbkx")
-                if resourceManagement.beatOnce:
-                    resourceManagement.gameOver(
-                        "'Are you satisfied now? You shouldn't just keep playing. You really don't gain much'")
-                else:
-                    resourceManagement.gameOver(
-                        "'You have beat me, I will be your ally and help you rebuild this broken "
-                        "world.' You and the being begin planning on how you can stop the Earth")
-                    # if player has killed an enemy run code below
-            else:
-                # if player beat the game once run code below
-                if resourceManagement.beatOnce:
-                    print(
-                        "'Have you really come back just to kill them again? Well this time I will make sure to stop you for it you monster.'")
-                    # if player has not beaten game once run code below
-                else:
-                    print("'You think you can get away with murder? Well I will make sure you are punished for it'")
-                enemies.startEncounter("Yorbkx")
-                if resourceManagement.beatOnce:
-                    resourceManagement.gameOver("You have killed it again. You grin in satisfaction.")
-                else:
-                    resourceManagement.gameOver(
-                        "You have killed the being. You stumble through the forest.\nYou feel the "
-                        "souls of the monsters you killed try to fight you but you fight it off.")
 
 
 # code for house 3
@@ -188,3 +151,55 @@ def house3():
         else:
             print("Not an option")
             house3()
+
+
+def secretBoss():
+  if forest.swordObtained and forest.armorObtained:
+            # game checks if you have 2 specific items
+            print("A mysterious being walks out from behind the tree.")
+            if enemies.enemiesKilled == 0:
+                if resourceManagement.beatOnce:
+                    # if player has killed 0 enemies and has beaten the game once print message below
+                    print("'You have beat this game before it seems. Well no need to repeat myself. Let's get straight to it!")
+                else:
+                    # if player has not beaten game once run code below
+                    print(
+                        "The being speaks in your head. 'You have managed to escape that cursed place without spilling any "
+                        "blood and you have found the sword and the armor. For that I applaud you. I have been here for so "
+                        "long with nothing to do. Why not give me a fight?")
+                    input("Fight this being?")
+                    print("'You really think that you have a choice?'")
+                enemies.startEncounter("Yorbkx")
+                defeated()
+                if resourceManagement.beatOnce:
+                    resourceManagement.gameOver(
+                        "'Are you satisfied now? You shouldn't just keep playing. You really don't gain much'")
+                else:
+                    resourceManagement.gameOver(
+                        "'You have beat me, I will be your ally and help you rebuild this broken "
+                        "world.' You and the being begin planning on how you can stop the Earth")
+                    # if player has killed an enemy run code below
+            else:
+                # if player beat the game once run code below
+                if resourceManagement.beatOnce:
+                    print(
+                        "'Have you really come back just to kill them again? Well this time I will make sure to stop you for it you monster.'")
+                    # if player has not beaten game once run code below
+                else:
+                    print("'You think you can get away with murder? Well I will make sure you are punished for it'")
+                enemies.startEncounter("Yorbkx")
+                defeated()
+                if resourceManagement.beatOnce:
+                    resourceManagement.gameOver("You have killed it again. You grin in satisfaction.")
+                else:
+                    resourceManagement.gameOver(
+                        "You have killed the being. You stumble through the forest.\nYou feel the "
+                        "souls of the monsters you killed try to fight you but you fight it off.")
+
+
+def defeated():
+  file = open("playedOnce.txt", "w")
+  file.truncate(0)
+  file.write(str(resourceManagement.beatOnce))
+
+  file.close()

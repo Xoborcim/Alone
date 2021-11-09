@@ -2,7 +2,7 @@ inventory = []
 maxInventory = 5
 playerAttack = 1
 playerDefense = 0
-playerHealth = 10
+playerHealth = 15
 playerEvasiveness = 2
 
 
