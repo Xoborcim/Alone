@@ -296,17 +296,17 @@ def forestDarkEast():
         elif choicePath.lower() == "pickup" and not sheetPickedUp:
             sheetPickedUp = True
             inventoryManagement.addItem("Metal Sheet")
-            if sheetPickedUp and oStonePickedUp:
-                print("You picked up the sheet. The 'Ominous Stone' and the 'Metal Sheet' combine into the 'Sword of "
-                      "the Wanderer'\nThe sword is pointing to where the stone was found.")
-                inventoryManagement.removeItem("Metal Sheet")
-                inventoryManagement.removeItem("Ominous Stone")
-                inventoryManagement.weaponAdd("Sword of the Wanderer", 10)
-                swordObtained = True
-                # if player has obtained 2 specific items those items will create a third item, the first 2 items will disappear from your inventory
         elif choicePath.lower() == "eat":
             resourceManagement.consumeFood("Apple")
         else:
             print("Not an option")
             forestDarkEast()
+        if sheetPickedUp and oStonePickedUp:
+            print("You picked up the sheet. The 'Ominous Stone' and the 'Metal Sheet' combine into the 'Sword of "
+                  "the Wanderer'\nThe sword is pointing to where the stone was found.")
+            inventoryManagement.removeItem("Metal Sheet")
+            inventoryManagement.removeItem("Ominous Stone")
+            inventoryManagement.weaponAdd("Sword of the Wanderer", 10)
+            swordObtained = True
+            # if player has obtained 2 specific items those items will create a third item, the first 2 items will disappear from your inventory
 
