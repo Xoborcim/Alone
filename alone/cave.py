@@ -73,6 +73,7 @@ def caveEast():
     global encounteredEnemy
     global inCave
     global inRoomCaveEast
+    global keyObtained
 
     resourceManagement.step()
     if not encounteredEnemy:
@@ -96,6 +97,7 @@ def caveEast():
             resourceManagement.consumeFood("Apple")
         elif choicePath.lower() == "pickup" and not keyObtained:
             inventoryManagement.addItem("Crimson Key")
+            keyObtained = True
             print("You have obtained the 'Crimson Key'")
         else:
             print("Not an option")
