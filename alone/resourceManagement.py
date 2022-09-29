@@ -101,7 +101,7 @@ def load():
     global beatOnce
     global day
 
-    file = open("playedOnce.txt", "r")
+    file = open(r"alone\playedOnce.txt", "r")
     data = file.readlines()
     beatOnce = data[0]
     if beatOnce:

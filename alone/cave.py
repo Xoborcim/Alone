@@ -162,6 +162,6 @@ def caveExit():
     elif enemies.enemiesKilled != 0:
         print("As you walk into the meadow you feel a sharp pain in your gut.")
         print("All the souls you have taken away from those 'monsters' begin transforming you into something that is "
-              "not you.")
+              "not you. But maybe that's just what you want to think.")
         resourceManagement.gameOver("You have lost everything that keeps you attached to your humanity.\nYou stumble "
                                     "through the meadow as you disappear, consumed by the souls and your own guilt.")

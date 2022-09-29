@@ -160,7 +160,7 @@ def secretBoss():
             if enemies.enemiesKilled == 0:
                 if resourceManagement.beatOnce:
                     # if player has killed 0 enemies and has beaten the game once print message below
-                    print("'You have beat this game before it seems. Well no need to repeat myself. Let's get straight to it!")
+                    print("'You have beaten this game before it seems. Well no need to repeat myself. Let's get straight to it!")
                 else:
                     # if player has not beaten game once run code below
                     print(
