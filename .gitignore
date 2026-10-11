@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# PyInstaller output (alone/alone.spec is kept on purpose)
+build/
+dist/
+alone/main.spec
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
